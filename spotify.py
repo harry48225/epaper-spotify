@@ -1,6 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-
+from Song import Song
 import yaml
 
 
@@ -22,7 +22,12 @@ class Spotify_client(object):
     def get_current_song(self):
         recent_songs = self.Spotify.current_user_playing_track()
 
-        print(recent_songs)
+        track_name = recent_songs['item']['name']
+        album_name = recent_songs['item']['album']['name']
+        album_art = recent_songs['item']['album']['images'][2]['url']
+        artist = recent_songs['item']['album']['artists'][0]['name'] # Might potentially be multiple artists?
+
+        return Song(track_name, album_name, album_art, artist)
 
     def load_secrets(self):
         with open("credentials.yaml") as f:

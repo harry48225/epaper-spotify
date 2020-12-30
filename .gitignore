@@ -1,2 +1,3 @@
 venv/*
 credentials.yaml
+__pycache__/*
