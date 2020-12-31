@@ -20,11 +20,15 @@ class Spotify_client(object):
         self.authenticate()
 
     def get_current_song(self):
+
+        if self.sp_oauth.is_token_expired(self.token):
+            self.refresh_token()
+
         recent_songs = self.Spotify.current_user_playing_track()
 
         track_name = recent_songs['item']['name']
         album_name = recent_songs['item']['album']['name']
-        album_art = recent_songs['item']['album']['images'][2]['url']
+        album_art = recent_songs['item']['album']['images'][1]['url'] # Change to 0 to get 64x64 image
         artist = recent_songs['item']['album']['artists'][0]['name'] # Might potentially be multiple artists?
 
         return Song(track_name, album_name, album_art, artist)
@@ -51,16 +55,15 @@ class Spotify_client(object):
 
             code = self.sp_oauth.parse_response_code(response)
 
-            token = self.sp_oauth.get_access_token(code, as_dict = False)
-        else:
-            token = token['access_token']
+            token = self.sp_oauth.get_access_token(code, as_dict = True)
 
-        self.Spotify = spotipy.Spotify(auth=token)
+        self.token = token
+        self.Spotify = spotipy.Spotify(auth=token['access_token'])
 
     def refresh_token(self):
-        if self.sp_oauth.is_token_expired(token_info):
-            token_info = self.sp_oauth.refresh_access_token(token_info['refresh_token'])
-            token = token_info['access_token']
-            self.Spotify = spotipy.Spotify(auth=token)
+  
+        token_info = self.sp_oauth.refresh_access_token(self.token['refresh_token'])
+        self.token = token_info
+        self.Spotify = spotipy.Spotify(auth=self.token['access_token'])
 
 

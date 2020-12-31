@@ -1,7 +1,3 @@
-Double the resolution of the album art and then have it slightly cropped since the image is 64x64 and the display is 250x122
-
 Write the code that refreshes the current song periodically
 
 How often should we update the song playing?
-
-Write the image generation code
