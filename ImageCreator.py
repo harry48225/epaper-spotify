@@ -11,7 +11,7 @@ class ImageCreator(object):
     
     def __init__(self):
         self.FONT_SIZE = 10
-        self.sp = spotify.Spotify_client()
+        
         self.font = ImageFont.truetype("font/PressStart2P-Regular.ttf", self.FONT_SIZE)
 
     def get_album_art(self, url):
@@ -25,10 +25,7 @@ class ImageCreator(object):
 
         return grey_album_art
 
-    def get_image(self):
-
-        song = self.sp.get_current_song()
-
+    def get_image(self, song):
         grey_album_art = self.get_album_art(song.get_album_art_url())
 
         canvas = Image.new('1', (250, 122), 255) # Empty image of the correct size
@@ -46,14 +43,14 @@ class ImageCreator(object):
         y = self.draw_wrapped_text(draw, "|", self.font, (136,y), self.FONT_SIZE)
         y = self.draw_wrapped_text(draw, song.get_track_name(), self.font, (136,y), self.FONT_SIZE)
 
-        canvas.show()
+        return canvas
 
     def draw_wrapped_text(self, draw, text, font, position, size):
         # Return the y coordinate of the last line of text
 
         x = position[0]
         y = position[1]
-        for line in textwrap.wrap(text, width=int(128/self.FONT_SIZE)):
+        for line in textwrap.wrap(text, width=int(100/self.FONT_SIZE)):
             draw.text((x,y), line, font = font, fill = 0)
             y += (size+2)
 
