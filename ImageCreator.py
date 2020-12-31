@@ -56,6 +56,13 @@ class ImageCreator(object):
 
         return y
 
+    def get_no_song_playing_image(self):
+
+        canvas = Image.new('1', (250, 122), 255) # Empty image of the correct size
+        draw = ImageDraw.Draw(canvas)
+        draw.text((16,60), "nothing is playing o.O", font = self.font, fill = 0)
+
+        return canvas
 
     
 
