@@ -27,12 +27,17 @@ class Spotify_client(object):
         recent_songs = self.Spotify.current_user_playing_track()
 
         if recent_songs:
-            track_name = recent_songs['item']['name']
-            album_name = recent_songs['item']['album']['name']
-            album_art = recent_songs['item']['album']['images'][1]['url'] # Change to 0 to get 64x64 image
-            artist = recent_songs['item']['album']['artists'][0]['name'] # Might potentially be multiple artists?
 
-            return Song(track_name, album_name, album_art, artist)
+            try:
+                track_name = recent_songs['item']['name']
+                album_name = recent_songs['item']['album']['name']
+                album_art = recent_songs['item']['album']['images'][1]['url'] # Change to 0 to get 64x64 image
+                artist = recent_songs['item']['album']['artists'][0]['name'] # Might potentially be multiple artists?
+
+                return Song(track_name, album_name, album_art, artist)
+
+            except:
+                pass
 
         return None
 
