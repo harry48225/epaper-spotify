@@ -38,6 +38,6 @@ while True:
 
 
     last_song = current_song
-    time.sleep(10) # Sleep for 10 seconds
+    time.sleep(2) # Sleep for 2 seconds
 
 
