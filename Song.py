@@ -19,3 +19,15 @@ class Song(object):
 
     def get_artist(self):
         return self.artist
+        
+    def equals(self, song):
+
+        match = True
+
+        match = match and self.track_name == song.get_track_name()
+
+        match = match and self.album_name == song.get_album_name()
+
+        match = match and self.artist == song.get_artist()
+
+        return match

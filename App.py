@@ -27,7 +27,7 @@ class App(object):
         if current_song:
 
             # Only update if the song is new
-            if not (self.last_song and current_song.get_track_name() == self.last_song.get_track_name()):
+            if not (self.last_song and self.last_song.equals(current_song)):
 
                 # Display the image
                 print("getting image")
